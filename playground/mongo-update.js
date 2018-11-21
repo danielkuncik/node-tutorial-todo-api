@@ -8,22 +8,14 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{useNewUrlParser: true},
     console.log('Connected to MongoDB server');
     const db = client.db('TodoApp');
 
-
-
-    db.collection('Users').find({location:'Massachusetts'}).toArray().then((docs) => {
-        console.log('Todos');
-        console.log(JSON.stringify(docs, undefined, 2));
-    }, (err) => {
-        console.log('Unable to fetch todos', err);
+    db.collection('Users').findOneAndUpdate({
+        _id: new ObjectID('5bf185e2bfe5fb164895a1d1')
+    }, {
+        $set: {name: 'John Adams'}, $inc: {age: 1}
+        }, {returnOriginal: false}
+        ).then((result) => {
+            console.log(result);
     });
 
-
-
-
-
-   // client.close();
+    client.close();
 });
-
-
-// in mongo db, do not need to officially 'create database'
-// if you just give it a name and start using it, it counts
